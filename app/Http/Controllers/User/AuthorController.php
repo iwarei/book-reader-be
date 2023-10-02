@@ -32,6 +32,7 @@ class AuthorController extends Controller
             'name' => ['required', 'string', 'max: 255'],
         ]);
 
+        // $requestにidがない場合はnullとなりCreateされる。
         $author = Author::updateOrCreate(
             ['id' => $request->input('id')], 
             [
@@ -40,7 +41,10 @@ class AuthorController extends Controller
             ],
         );
 
-        return response()->json(['author' => $author], 201);
+        return response()->json(
+            ['author' => $author], 
+            $author->wasRecentlyCreated ? 201 : 200
+        );
     }
 
     /**
