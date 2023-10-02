@@ -43,7 +43,6 @@ class AuthorController extends Controller
 
         return response()->json(
             ['author' => $author], 
-            $author->wasRecentlyCreated ? 201 : 200
         );
     }
 

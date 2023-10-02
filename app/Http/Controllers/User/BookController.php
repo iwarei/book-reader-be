@@ -30,7 +30,6 @@ class BookController extends Controller
             'id' => ['sometimes', 'integer'],
             'title' => ['required', 'string', 'max: 255'],
             'detail' => ['sometimes', 'string'],
-
         ]);
 
         // $requestにidがない場合はnullとなりCreateされる。
