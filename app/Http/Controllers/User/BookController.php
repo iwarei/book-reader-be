@@ -26,8 +26,25 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'id' => ['sometimes', 'integer'],
+            'title' => ['required', 'string', 'max: 255'],
+            'detail' => ['sometimes', 'string'],
 
-        
+        ]);
+
+        // $requestにidがない場合はnullとなりCreateされる。
+        $author = Author::updateOrCreate(
+            ['id' => $request->input('id')], 
+            [
+                'name' => $request->input('name'),
+                'created_by' => Auth::id(),
+            ],
+        );
+
+        return response()->json(
+            ['author' => $author]
+        );
     }
 
     /**
