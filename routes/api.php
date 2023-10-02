@@ -28,6 +28,11 @@ Route::post('/forgot-password', [Auth\PasswordResetLinkController::class, 'store
 Route::post('/reset-password', [Auth\NewPasswordController::class, 'store'])->name('password.store');
 
 Route::middleware('auth')->group(function () {
+    // 書籍関連
+    Route::resource('book', User\BookController::class)->only(['index', 'store', 'destroy']);
+    // 作者関連
+    Route::resource('author', User\AuthorController::class)->only(['index', 'store', 'destroy']);
+
 
     // ユーザ情報編集
     Route::resource('user', User\UserController::class)->only(['store', 'destroy']);
