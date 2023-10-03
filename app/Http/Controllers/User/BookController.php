@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -28,36 +29,29 @@ class BookController extends Controller
     {
         $request->validate([
             'id' => ['sometimes', 'integer'],
-            'title' => ['required', 'string', 'max: 255'],
+            'title' => ['required_without:id', 'string', 'max: 255'],
+            'author_id' => ['sometimes', 'integer', 'exists:authors,id'],
             'detail' => ['sometimes', 'string'],
         ]);
 
         // $requestにidがない場合はnullとなりCreateされる。
-        $author = Author::updateOrCreate(
-            ['id' => $request->input('id')], 
+        $book = Book::updateOrCreate(
+            ['id' => $request->input('id')],
             [
-                'name' => $request->input('name'),
+                ...$request->all(),
                 'created_by' => Auth::id(),
             ],
         );
 
-        return response()->json(
-            ['author' => $author]
-        );
+        return response()->json([
+            'book' => $book
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(Book $book)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Book $book)
     {
         //
     }
