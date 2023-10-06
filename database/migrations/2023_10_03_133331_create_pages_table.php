@@ -11,11 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('authors', function (Blueprint $table) {
+        Schema::create('pages', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name')
-                ->comment('作者');
+            $table->foreignId('book_id')
+                ->comment('書籍ID')
+                ->constrained();
+
+            $table->string('file_name')
+                ->comment('ファイル名');
+
+            $table->integer('page')
+                ->nullable()
+                ->comment('頁');
 
             $table->timestamp('created_at')
                 ->useCurrent()
@@ -48,6 +56,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('authors');
+        Schema::dropIfExists('pages');
     }
 };

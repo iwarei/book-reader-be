@@ -29,10 +29,13 @@ Route::post('/reset-password', [Auth\NewPasswordController::class, 'store'])->na
 
 Route::middleware('auth')->group(function () {
     // 書籍関連
+    // 書籍トップ
     Route::resource('book', User\BookController::class)->only(['index', 'store', 'destroy']);
+    // 書籍頁
+    Route::resource('book.page', User\PageController::class)->only(['index', 'store', 'destroy']);
+
     // 作者関連
     Route::resource('author', User\AuthorController::class)->only(['index', 'store', 'destroy']);
-
 
     // ユーザ情報編集
     Route::resource('user', User\UserController::class)->only(['store', 'destroy']);
@@ -46,6 +49,5 @@ Route::middleware('auth')->group(function () {
                     ->middleware('throttle:6,1')
                     ->name('verification.send');
     Route::post('/logout', [Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
 });
 

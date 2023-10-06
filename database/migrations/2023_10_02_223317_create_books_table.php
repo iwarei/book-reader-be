@@ -42,7 +42,8 @@ return new class extends Migration
                 ->nullable()
                 ->comment('更新者');
 
-            $table->SoftDeletes();
+            $table->SoftDeletes()
+                ->comment('削除フラグ');
 
             $table->integer('deleted_by')
                 ->nullable()

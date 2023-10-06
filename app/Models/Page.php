@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Author extends Model
+class Page extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -16,10 +16,11 @@ class Author extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'book_id',
+        'file_name',
+        'page',
         'created_by',
         'updated_by',
-        'deleted_by',
     ];
 
     /**
@@ -35,5 +36,4 @@ class Author extends Model
         'deleted_at',
         'deleted_by',
     ];
-
 }

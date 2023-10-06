@@ -37,7 +37,7 @@ class AuthorController extends Controller
             ['id' => $request->input('id')], 
             [
                 'name' => $request->input('name'),
-                'created_by' => Auth::id(),
+                $request->has('id') ? 'updated_by' : 'created_by' => Auth::id(),
             ],
         );
 
@@ -59,6 +59,11 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        //
+        $author->fill(['deleted_by' => Auth::id()])->save();
+        $author->delete();
+
+        return response()->json([
+            'message' => 'Delete successed.',
+        ]);
     }
 }
